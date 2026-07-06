@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bot Award Celebration</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Scrolling + parallax text */
+    .award-text {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      white-space: nowrap;
+      animation: scrollText 15s linear infinite;
+      transition: transform 0.2s ease;
+    }
+
+    @keyframes scrollText {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .celebrate-btn {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+      background: #ff4081;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(-50%, 50%) translateY(0); }
+      50% { transform: translate(-50%, 50%) translateY(-15px); }
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transition: transform 0.4s ease;
+      z-index: 1000;
+    }
+
+    .popup.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .popup h2 {
+      margin: 0;
+      font-size: 2rem;
+      color: #2a5298;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 40px;
+      height: 60px;
+      background: red;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: rise 6s linear infinite;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-110vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="award-text" id="awardText">
+    Hello, I’m Bot Boy from Bot Industries. Presenting the Bot Award for the most bottest person alive… Thank you by AravinD
+  </div>
+
+  <button class="celebrate-btn" onclick="celebrate()">Celebrate 🎉</button>
+
+  <div class="popup" id="popup">
+    <h2>🎊 Congratulations! 🎊</h2>
+    <p>You are officially the Bottest Person Alive!</p>
+  </div>
+
+  <script>
+    function celebrate() {
+      document.getElementById('popup').classList.add('show');
+      for (let i = 0; i < 15; i++) {
+        createBalloon();
+      }
+    }
+
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = Math.random() * window.innerWidth + 'px';
+      balloon.style.background = getRandomColor();
+      balloon.style.animationDuration = (4 + Math.random() * 3) + 's';
+      document.body.appendChild(balloon);
+
+      setTimeout(() => {
+        balloon.remove();
+      }, 7000);
+    }
+
+    function getRandomColor() {
+      const colors = ['#ff4081', '#ffeb3b', '#4caf50', '#2196f3', '#9c27b0', '#ff5722'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Parallax effect on text when cursor moves
+    const awardText = document.getElementById('awardText');
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30; // horizontal tilt
+      const y = (e.clientY / window.innerHeight - 0.5) * 10; // vertical tilt
+      awardText.style.transform = `translateX(${x}px) translateY(${y}px)`;
+    });
+  </script>
+</body>
+</html>
